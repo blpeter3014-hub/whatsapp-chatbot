@@ -17,10 +17,10 @@ def normalize_recipient(wa_id: str) -> str:
 
 
 def send_text(to: str, body: str) -> bool:
-    token = os.getenv("WHATSAPP_TOKEN")
-    phone_number_id = os.getenv("PHONE_NUMBER_ID")
+    token = os.getenv("META_ACCESS_TOKEN") or os.getenv("WHATSAPP_TOKEN")
+    phone_number_id = os.getenv("WHATSAPP_PHONE_NUMBER_ID") or os.getenv("PHONE_NUMBER_ID")
     if not token or not phone_number_id:
-        print("[whatsapp] Faltan WHATSAPP_TOKEN o PHONE_NUMBER_ID en .env")
+        print("[whatsapp] Faltan META_ACCESS_TOKEN o WHATSAPP_PHONE_NUMBER_ID en .env")
         return False
 
     url = f"https://graph.facebook.com/{GRAPH_VERSION}/{phone_number_id}/messages"
@@ -42,7 +42,7 @@ def send_text(to: str, body: str) -> bool:
         return False
 
     if r.status_code >= 400:
-        # 401/190 normalmente = token vencido (dura 24 h en pruebas)
+        # 401/190 normalmente = token vencido
         print(f"[whatsapp] Error {r.status_code}: {r.text}")
         return False
     return True

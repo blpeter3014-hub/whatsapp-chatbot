@@ -30,8 +30,8 @@ def generate_response(messages: list, model: str | None = None) -> str:
         think=False,
         options={
             "temperature": 0.2,
-            "num_ctx": 4096,
-            "num_predict": 200,
+            "num_ctx": 8192,
+            "num_predict": 300,
         },
     )
     answer = response["message"]["content"].strip()
