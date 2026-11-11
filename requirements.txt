@@ -1,6 +1,6 @@
 fastapi
 uvicorn
 ollama
-psycopg[binary]
+asyncpg
 python-dotenv
 requests
